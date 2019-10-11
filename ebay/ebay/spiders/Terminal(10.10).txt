@@ -1,0 +1,1282 @@
+Last login: Wed Oct  9 16:27:05 on ttys004
+(base) MacBook-Pro:~ Emanuel$ scrapy shell
+2019-10-09 19:25:58 [scrapy.utils.log] INFO: Scrapy 1.6.0 started (bot: scrapybot)
+2019-10-09 19:25:58 [scrapy.utils.log] INFO: Versions: lxml 4.3.4.0, libxml2 2.9.9, cssselect 1.1.0, parsel 1.5.2, w3lib 1.21.0, Twisted 19.7.0, Python 3.7.3 (default, Mar 27 2019, 16:54:48) - [Clang 4.0.1 (tags/RELEASE_401/final)], pyOpenSSL 19.0.0 (OpenSSL 1.1.1c  28 May 2019), cryptography 2.7, Platform Darwin-18.7.0-x86_64-i386-64bit
+2019-10-09 19:25:58 [scrapy.crawler] INFO: Overridden settings: {'DUPEFILTER_CLASS': 'scrapy.dupefilters.BaseDupeFilter', 'LOGSTATS_INTERVAL': 0}
+2019-10-09 19:25:58 [scrapy.extensions.telnet] INFO: Telnet Password: 6f3ef1deda0c194b
+2019-10-09 19:25:58 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.memusage.MemoryUsage']
+2019-10-09 19:25:58 [scrapy.middleware] INFO: Enabled downloader middlewares:
+['scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',
+ 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',
+ 'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware',
+ 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware',
+ 'scrapy.downloadermiddlewares.retry.RetryMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',
+ 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware',
+ 'scrapy.downloadermiddlewares.cookies.CookiesMiddleware',
+ 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware',
+ 'scrapy.downloadermiddlewares.stats.DownloaderStats']
+2019-10-09 19:25:58 [scrapy.middleware] INFO: Enabled spider middlewares:
+['scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',
+ 'scrapy.spidermiddlewares.offsite.OffsiteMiddleware',
+ 'scrapy.spidermiddlewares.referer.RefererMiddleware',
+ 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',
+ 'scrapy.spidermiddlewares.depth.DepthMiddleware']
+2019-10-09 19:25:58 [scrapy.middleware] INFO: Enabled item pipelines:
+[]
+2019-10-09 19:25:58 [scrapy.extensions.telnet] INFO: Telnet console listening on 127.0.0.1:6025
+[s] Available Scrapy objects:
+[s]   scrapy     scrapy module (contains scrapy.Request, scrapy.Selector, etc)
+[s]   crawler    <scrapy.crawler.Crawler object at 0x111734908>
+[s]   item       {}
+[s]   settings   <scrapy.settings.Settings object at 0x111734898>
+[s] Useful shortcuts:
+[s]   fetch(url[, redirect=True]) Fetch URL and update local objects (by default, redirects are followed)
+[s]   fetch(req)                  Fetch a scrapy.Request and update local objects 
+[s]   shelp()           Shell help (print this help)
+[s]   view(response)    View response in a browser
+In [1]: req = scrapy.Request('https://www.ebay.com/itm/MOTU-Masters-of-the-Unive
+   ...: rse-He-Man-Spikor-Action-Figure-Part-Vintage-Lot-Mace/163896880849?hash=
+   ...: item262903eed1:g:z40AAOSwm8Zdm~pA',headers= {'User-Agent': 'Mozilla/5.0 
+   ...: (X11; Ubuntu; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0'})     
+
+In [2]: fetch(req)                                                              
+2019-10-09 19:27:16 [scrapy.core.engine] INFO: Spider opened
+2019-10-09 19:27:17 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://www.ebay.com/itm/MOTU-Masters-of-the-Universe-He-Man-Spikor-Action-Figure-Part-Vintage-Lot-Mace/163896880849?hash=item262903eed1:g:z40AAOSwm8Zdm~pA> (referer: None)
+
+In [3]: response.xpath('//span[@id="vi-lkhdr-itmTitl"]')                                                                  
+Out[3]: [<Selector xpath='//span[@id="vi-lkhdr-itmTitl"]' data='<span id="vi-lkhdr-itmTitl" class="u-...'>]
+
+In [4]: response.xpath('//span[@id="vi-lkhdr-itmTitl"]').extract()                                                        
+Out[4]: ['<span id="vi-lkhdr-itmTitl" class="u-dspn">MOTU Masters of the Universe He-Man Spikor Action Figure Part Vintage Lot Mace</span>']
+
+In [5]: response.xpath('//span[@id="vi-lkhdr-itmTitl"]').extract_first()                                                  
+Out[5]: '<span id="vi-lkhdr-itmTitl" class="u-dspn">MOTU Masters of the Universe He-Man Spikor Action Figure Part Vintage Lot Mace</span>'
+
+In [6]: response.xpath('//span[@id="vi-lkhdr-itmTitl"]/text()').extract_first()                                           
+Out[6]: 'MOTU Masters of the Universe He-Man Spikor Action Figure Part Vintage Lot Mace'
+
+In [7]: req = scrapy.Request('https://www.ebay.com/itm/MOTU-Masters-of-the-Universe-He-Man-Spikor-Action-Figure-Part-Vinta
+   ...: ge-Lot-Mace/163896880849?hash=item262903eed1:g:z40AAOSwm8Zdm~pA',headers= {'User-Agent': 'Mozilla/5.0 (X11; Ubuntu
+   ...: ; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0'})                                                           
+
+In [8]: fetch(req)                                                                                                        
+2019-10-09 22:08:42 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://www.ebay.com/itm/MOTU-Masters-of-the-Universe-He-Man-Spikor-Action-Figure-Part-Vintage-Lot-Mace/163896880849?hash=item262903eed1:g:z40AAOSwm8Zdm~pA> (referer: None)
+
+In [9]: response.xpath('//span[@class="notranslate"])                                                                     
+  File "<ipython-input-9-e4265ebe6cd2>", line 1
+    response.xpath('//span[@class="notranslate"])
+                                                 ^
+SyntaxError: EOL while scanning string literal
+
+
+In [10]: response.xpath('//span[@class="notranslate"]')                                                                   
+Out[10]: [<Selector xpath='//span[@class="notranslate"]' data='<span class="notranslate" id="prcIsum...'>]
+
+In [11]: response.xpath('//span[@class="notranslate"]').extract_first()                                                   
+Out[11]: '<span class="notranslate" id="prcIsum" style="">\n\t\t\t\t\t\t\t\t\t\tUS $10.59</span>'
+
+In [12]: response.xpath('//span[@class="notranslate"]/text()').extract_first()                                            
+Out[12]: '\n\t\t\t\t\t\t\t\t\t\tUS $10.59'
+
+In [13]: import re                                                                                                        
+
+In [14]: re.findall('\d+', response.xpath('//span[@class="notranslate"]/text()').extract_first())                         
+Out[14]: ['10', '59']
+
+In [15]: re.findall('\f+', response.xpath('//span[@class="notranslate"]/text()').extract_first())                         
+Out[15]: []
+
+In [16]: test1 = response.xpath('//span[@class="notranslate"]/text()').extract_first()                                    
+
+In [17]: test.rstrip()                                                                                                    
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+<ipython-input-17-832eef1d7ef7> in <module>
+----> 1 test.rstrip()
+
+NameError: name 'test' is not defined
+
+In [18]: test1.lstrip()                                                                                                   
+Out[18]: 'US $10.59'
+
+In [19]: test1                                                                                                            
+Out[19]: '\n\t\t\t\t\t\t\t\t\t\tUS $10.59'
+
+In [20]: test1 = test1.lstrip()                                                                                           
+
+In [21]: re.findall('\d+(?:\.\d+)?',test1)                                                                                
+Out[21]: ['10.59']
+
+In [22]: ''.join(re.findall('\d+(?:\.\d+)?',test1))                                                                       
+Out[22]: '10.59'
+
+In [23]: float(''.join(re.findall('\d+(?:\.\d+)?',test1)))                                                                
+Out[23]: 10.59
+
+In [24]: price1 = response.xpath('//span[@class="notranslate"]/text()').extract_first().lstrip()                          
+
+In [25]: price = float(''.join(re.findall('\d+(?:\.\d+)?',price1)))                                                       
+
+In [26]: price                                                                                                            
+Out[26]: 10.59
+
+In [27]: response.xpath('//h2[@itemprop="brand"]/span/text()').extract_first()                                            
+Out[27]: 'Mattel'
+
+In [28]:                                                                                                                  
+  [Restored Oct 10, 2019 at 9:00:34 AM]
+Last login: Thu Oct 10 09:00:34 on ttys003
+Restored session: Thu Oct 10 00:29:56 EDT 2019
+(base) MacBook-Pro:~ Emanuel$ req = scrapy.Request('https://www.ebay.com/itm/MOTU-Masters-of-the-Universe-He-Man-Spikor-Action-Figure-Part-Vinta
+-bash: syntax error near unexpected token `('
+(base) MacBook-Pro:~ Emanuel$    ...: ge-Lot-Mace/163896880849?hash=item262903eed1:g:z40AAOSwm8Zdm~pA',headers= {'User-Agent': 'Mozilla/5.0 (X11; Ubuntu
+-bash: syntax error near unexpected token `('
+(base) MacBook-Pro:~ Emanuel$ req = scrapy.Request('https://www.ebay.com/itm/MOTU-Masters-of-the-Universe-He-Man-Spikor-Action-Figure-Part-Vintage-Lot-Mace/163896880849?hash=item262903eed1:g:z40AAOSwm8Zdm~pA',headers= {'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0'})
+-bash: syntax error near unexpected token `('
+(base) MacBook-Pro:~ Emanuel$ req = scrapy.Request('https://www.ebay.com/itm/MOTU-Masters-of-the-Universe-He-Man-Spikor-Action-Figure-Part-Vintage-Lot-Mace/163896880849?hash=item262903eed1:g:z40AAOSwm8Zdm~pA',headers= {'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0'})
+-bash: syntax error near unexpected token `('
+(base) MacBook-Pro:~ Emanuel$ scrapy shell
+2019-10-10 09:07:12 [scrapy.utils.log] INFO: Scrapy 1.6.0 started (bot: scrapybot)
+2019-10-10 09:07:12 [scrapy.utils.log] INFO: Versions: lxml 4.3.4.0, libxml2 2.9.9, cssselect 1.1.0, parsel 1.5.2, w3lib 1.21.0, Twisted 19.7.0, Python 3.7.3 (default, Mar 27 2019, 16:54:48) - [Clang 4.0.1 (tags/RELEASE_401/final)], pyOpenSSL 19.0.0 (OpenSSL 1.1.1c  28 May 2019), cryptography 2.7, Platform Darwin-18.7.0-x86_64-i386-64bit
+2019-10-10 09:07:12 [scrapy.crawler] INFO: Overridden settings: {'DUPEFILTER_CLASS': 'scrapy.dupefilters.BaseDupeFilter', 'LOGSTATS_INTERVAL': 0}
+2019-10-10 09:07:12 [scrapy.extensions.telnet] INFO: Telnet Password: 8b5221df17f071e1
+2019-10-10 09:07:12 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.memusage.MemoryUsage']
+2019-10-10 09:07:12 [scrapy.middleware] INFO: Enabled downloader middlewares:
+['scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',
+ 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',
+ 'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware',
+ 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware',
+ 'scrapy.downloadermiddlewares.retry.RetryMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',
+ 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware',
+ 'scrapy.downloadermiddlewares.cookies.CookiesMiddleware',
+ 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware',
+ 'scrapy.downloadermiddlewares.stats.DownloaderStats']
+2019-10-10 09:07:12 [scrapy.middleware] INFO: Enabled spider middlewares:
+['scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',
+ 'scrapy.spidermiddlewares.offsite.OffsiteMiddleware',
+ 'scrapy.spidermiddlewares.referer.RefererMiddleware',
+ 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',
+ 'scrapy.spidermiddlewares.depth.DepthMiddleware']
+2019-10-10 09:07:12 [scrapy.middleware] INFO: Enabled item pipelines:
+[]
+2019-10-10 09:07:12 [scrapy.extensions.telnet] INFO: Telnet console listening on 127.0.0.1:6023
+[s] Available Scrapy objects:
+[s]   scrapy     scrapy module (contains scrapy.Request, scrapy.Selector, etc)
+[s]   crawler    <scrapy.crawler.Crawler object at 0x112071940>
+[s]   item       {}
+[s]   settings   <scrapy.settings.Settings object at 0x1120718d0>
+[s] Useful shortcuts:
+[s]   fetch(url[, redirect=True]) Fetch URL and update local objects (by default, redirects are followed)
+[s]   fetch(req)                  Fetch a scrapy.Request and update local objects 
+[s]   shelp()           Shell help (print this help)
+[s]   view(response)    View response in a browser
+In [1]: req = scrapy.Request('https://www.ebay.com/itm/MOTU-Masters-of-the-Universe-He-Man-Spikor-Action-Figure-Part-Vinta
+   ...: ge-Lot-Mace/163896880849?hash=item262903eed1:g:z40AAOSwm8Zdm~pA',headers= {'User-Agent': 'Mozilla/5.0 (X11; Ubuntu
+   ...: ; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0'})                                                           
+
+In [2]: fetch(req)                                                                                                        
+2019-10-10 09:07:18 [scrapy.core.engine] INFO: Spider opened
+2019-10-10 09:07:19 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://www.ebay.com/itm/MOTU-Masters-of-the-Universe-He-Man-Spikor-Action-Figure-Part-Vintage-Lot-Mace/163896880849?hash=item262903eed1:g:z40AAOSwm8Zdm~pA> (referer: None)
+
+In [3]: response.xpath('//td[@class="attrLabels"]/td').extract()                                                          
+Out[3]: []
+
+In [4]: response.xpath('//td[@class="attrLabels"]')                                                                       
+Out[4]: 
+[<Selector xpath='//td[@class="attrLabels"]' data='<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\t...'>,
+ <Selector xpath='//td[@class="attrLabels"]' data='<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\t...'>,
+ <Selector xpath='//td[@class="attrLabels"]' data='<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\t...'>,
+ <Selector xpath='//td[@class="attrLabels"]' data='<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\t...'>,
+ <Selector xpath='//td[@class="attrLabels"]' data='<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\t...'>,
+ <Selector xpath='//td[@class="attrLabels"]' data='<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\t...'>]
+
+In [5]: response.xpath('//td[@class="attrLabels"]').extract_first()                                                       
+Out[5]: '<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\tCondition:</td>'
+
+In [6]: response.xpath('//td[@class="attrLabels"]/text()').extract()                                                      
+Out[6]: 
+['\n\t\t\t\t\t\t\t\t\t \t\t\tCondition:',
+ '\n\t\t\t\t\t\t\t\t\t \t\t\tSize: ',
+ '\n\t\t\t\t\t\t\t\t\t \t\t\tBrand: ',
+ '\n\t\t\t\t\t\t\t\t\t \t\t\tType: ',
+ '\n\t\t\t\t\t\t\t\t\t \t\t\tEra: ',
+ '\n\t\t\t\t\t\t\t\t\t \t\t\tCharacter Family: ']
+
+In [7]: response.xpath('//td[@class="attrLabels"]/span/text()').extract()                                                 
+Out[7]: []
+
+In [8]: response.xpath('//td[@class="attrLabels"]//span/text()').extract()                                                
+Out[8]: []
+
+In [9]: response.xpath('//*[@id="viTabs_0_is"]/div/table/tbody//').extract()                                              
+---------------------------------------------------------------------------
+XPathEvalError                            Traceback (most recent call last)
+//anaconda3/lib/python3.7/site-packages/parsel/selector.py in xpath(self, query, namespaces, **kwargs)
+    237                              smart_strings=self._lxml_smart_strings,
+--> 238                              **kwargs)
+    239         except etree.XPathError as exc:
+
+src/lxml/etree.pyx in lxml.etree._Element.xpath()
+
+src/lxml/xpath.pxi in lxml.etree.XPathElementEvaluator.__call__()
+
+src/lxml/xpath.pxi in lxml.etree._XPathEvaluatorBase._handle_result()
+
+XPathEvalError: Invalid expression
+
+During handling of the above exception, another exception occurred:
+
+ValueError                                Traceback (most recent call last)
+<ipython-input-9-cab9cc69684f> in <module>
+----> 1 response.xpath('//*[@id="viTabs_0_is"]/div/table/tbody//').extract()
+
+//anaconda3/lib/python3.7/site-packages/scrapy/http/response/text.py in xpath(self, query, **kwargs)
+    117 
+    118     def xpath(self, query, **kwargs):
+--> 119         return self.selector.xpath(query, **kwargs)
+    120 
+    121     def css(self, query):
+
+//anaconda3/lib/python3.7/site-packages/parsel/selector.py in xpath(self, query, namespaces, **kwargs)
+    240             msg = u"XPath error: %s in %s" % (exc, query)
+    241             msg = msg if six.PY3 else msg.encode('unicode_escape')
+--> 242             six.reraise(ValueError, ValueError(msg), sys.exc_info()[2])
+    243 
+    244         if type(result) is not list:
+
+//anaconda3/lib/python3.7/site-packages/six.py in reraise(tp, value, tb)
+    690                 value = tp()
+    691             if value.__traceback__ is not tb:
+--> 692                 raise value.with_traceback(tb)
+    693             raise value
+    694         finally:
+
+//anaconda3/lib/python3.7/site-packages/parsel/selector.py in xpath(self, query, namespaces, **kwargs)
+    236             result = xpathev(query, namespaces=nsp,
+    237                              smart_strings=self._lxml_smart_strings,
+--> 238                              **kwargs)
+    239         except etree.XPathError as exc:
+    240             msg = u"XPath error: %s in %s" % (exc, query)
+
+src/lxml/etree.pyx in lxml.etree._Element.xpath()
+
+src/lxml/xpath.pxi in lxml.etree.XPathElementEvaluator.__call__()
+
+src/lxml/xpath.pxi in lxml.etree._XPathEvaluatorBase._handle_result()
+
+ValueError: XPath error: Invalid expression in //*[@id="viTabs_0_is"]/div/table/tbody//
+
+In [10]: response.xpath('//*[@id="viTabs_0_is"]/div/table/tbody//span').extract()                                         
+Out[10]: []
+
+In [11]: response.xpath('//*[@id="viTabs_0_is"]/div/table/tbody//span')                                                   
+Out[11]: []
+
+In [12]: response.xpath('//td[@class="attrLabels"]/td/td/span').extract()                                                 
+Out[12]: []
+
+In [13]: response.xpath('//td[@class="attrLabels"]//span')                                                                
+Out[13]: []
+
+In [14]: response.xpath('//div[@class="itemAttr"]')                                                                       
+Out[14]: [<Selector xpath='//div[@class="itemAttr"]' data='<div class="itemAttr" id="viTabs_0_is...'>]
+
+In [15]: response.xpath('//div[@class="itemAttr"]').extract()                                                             
+Out[15]: ['<div class="itemAttr" id="viTabs_0_is">\n\t\t\t<div class="section">\n\t\t\t\t\t<h2 class="secHd">Item specifics</h2>\n\t\t\t\t\t<table width="100%" cellspacing="0" cellpadding="0" role="presentation">\n\t\t\t\t\t\t\n\t\t\t\t\t\t<tr>\n\t\t\t\t\t\t\t\t\t<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\tCondition:</td>\n\t\t\t\t\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t\t\t\t\t<td width="50.0%">\n\t\t\t\t\t\t\t\t\t\t\t\t<!-- ITEM CONDITION  -->\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<!-- If Attribute is having hidden text / link\t -->\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div aria-live="polite">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tUsed: <span id="vi-cond-addl-info">An item that has been used previously. See the seller’s listing for full details and description of </span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span id="hiddenContent" class="u-dspn" aria-expanded="false">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tany imperfections.<a href="https://pages.ebay.com/help/sell/contextual/condition_5.html" target="_blank" class="infoLink u-nowrap">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tSee all condition definitions<b class="g-hdn">- opens in a new window or tab</b></a>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<!-- TODO: remove hardcoded ID -->\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span id="readFull" class="infoLink u-nowrap">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t... <a href="javascript:;">Read more<b class="g-hdn">about the condition</b></a>\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<!-- </td> -->\n\t\t\t\t\t\t\t\t\t\t\t\t\t</td>\n\t\t\t\t\t\t\t\t\t\t<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\tSize: </td>\n\t\t\t\t\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t\t\t\t\t<td width="50.0%">\n\t\t\t\t\t\t\t\t\t\t\t\t<span>6in.</span></td>\n\t\t\t\t\t\t\t\t\t\t</tr>\n\t\t\t\t\t\t\t<tr>\n\t\t\t\t\t\t\t\t\t<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\tBrand: </td>\n\t\t\t\t\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t\t\t\t\t<td width="50.0%">\n\t\t\t\t\t\t\t\t\t\t\t\t<h2 itemprop="brand" itemscope="itemscope" itemtype="http://schema.org/Brand"><span itemprop="name">Mattel</span></h2></td>\n\t\t\t\t\t\t\t\t\t\t<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\tType: </td>\n\t\t\t\t\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t\t\t\t\t<td width="50.0%">\n\t\t\t\t\t\t\t\t\t\t\t\t<span>Action Figure</span></td>\n\t\t\t\t\t\t\t\t\t\t</tr>\n\t\t\t\t\t\t\t<tr>\n\t\t\t\t\t\t\t\t\t<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\tEra: </td>\n\t\t\t\t\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t\t\t\t\t<td width="50.0%">\n\t\t\t\t\t\t\t\t\t\t\t\t<span>1980-2001</span></td>\n\t\t\t\t\t\t\t\t\t\t<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\tCharacter Family: </td>\n\t\t\t\t\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t\t\t\t\t<td width="50.0%">\n\t\t\t\t\t\t\t\t\t\t\t\t<span>Masters of the Universe</span></td>\n\t\t\t\t\t\t\t\t\t\t</tr>\n\t\t\t\t\t\t\t<!-- Added for see review link -->\n\t\t\t\t\t\t\t</table>\n\t\t\t\t\t\t\n\t\t\t\t\t</div>\n\t\t\t</div>']
+
+In [16]: specifics_table = response.xpath('//div[@class="itemAttr"]')                                                     
+
+In [17]: specifics_table.xpath('//td[@class="attrLabels"]')                                                               
+Out[17]: 
+[<Selector xpath='//td[@class="attrLabels"]' data='<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\t...'>,
+ <Selector xpath='//td[@class="attrLabels"]' data='<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\t...'>,
+ <Selector xpath='//td[@class="attrLabels"]' data='<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\t...'>,
+ <Selector xpath='//td[@class="attrLabels"]' data='<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\t...'>,
+ <Selector xpath='//td[@class="attrLabels"]' data='<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\t...'>,
+ <Selector xpath='//td[@class="attrLabels"]' data='<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\t...'>]
+
+In [18]: specifics_table.xpath('//td[@class="attrLabels"]').extract()                                                     
+Out[18]: 
+['<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\tCondition:</td>',
+ '<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\tSize: </td>',
+ '<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\tBrand: </td>',
+ '<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\tType: </td>',
+ '<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\tEra: </td>',
+ '<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\tCharacter Family: </td>']
+
+In [19]: specifics_table.xpath('//td[@class="attrLabels"]//span')                                                         
+Out[19]: []
+
+In [20]: specifics_table.xpath('//td[@width="50.0%"]/span')                                                               
+Out[20]: 
+[<Selector xpath='//td[@width="50.0%"]/span' data='<span>6in.</span>'>,
+ <Selector xpath='//td[@width="50.0%"]/span' data='<span>Action Figure</span>'>,
+ <Selector xpath='//td[@width="50.0%"]/span' data='<span>1980-2001</span>'>,
+ <Selector xpath='//td[@width="50.0%"]/span' data='<span>Masters of the Universe</span>'>]
+
+In [21]: specifics_table.xpath('//td[@width="50.0%"]/span').extract()                                                     
+Out[21]: 
+['<span>6in.</span>',
+ '<span>Action Figure</span>',
+ '<span>1980-2001</span>',
+ '<span>Masters of the Universe</span>']
+
+In [22]: specifics_table.xpath('//td[@width="50.0%"]/span/text()').extract()                                              
+Out[22]: ['6in.', 'Action Figure', '1980-2001', 'Masters of the Universe']
+
+In [23]: view(response)                                                                                               
+Out[23]: True
+
+In [24]: response.xpath('//table')                                                                                    
+Out[24]: 
+[<Selector xpath='//table' data='<table class="gh-tbl" role="presentat...'>,
+ <Selector xpath='//table' data='<table class="gh-tbl2" role="presenta...'>,
+ <Selector xpath='//table' data='<table width="100%" class="vi-bc-topM...'>,
+ <Selector xpath='//table' data='<table class="" role="presentation">\n...'>,
+ <Selector xpath='//table' data='<table width="100%" role="presentatio...'>,
+ <Selector xpath='//table' data='<table style="width:100%">\n\t\t\t\t<tr>\n\t...'>,
+ <Selector xpath='//table' data='<table class="img img140">\n\t\t\t\t<tbody...'>,
+ <Selector xpath='//table' data='<table width="140px" height="140px">\n...'>,
+ <Selector xpath='//table' data='<table width="100%" cellspacing="0" c...'>,
+ <Selector xpath='//table' data='<table class="gf-t" role="presentatio...'>]
+
+In [25]: response.xpath("//table[@role='presentation']")                                                              
+Out[25]: 
+[<Selector xpath="//table[@role='presentation']" data='<table class="gh-tbl" role="presentat...'>,
+ <Selector xpath="//table[@role='presentation']" data='<table class="gh-tbl2" role="presenta...'>,
+ <Selector xpath="//table[@role='presentation']" data='<table width="100%" class="vi-bc-topM...'>,
+ <Selector xpath="//table[@role='presentation']" data='<table class="" role="presentation">\n...'>,
+ <Selector xpath="//table[@role='presentation']" data='<table width="100%" role="presentatio...'>,
+ <Selector xpath="//table[@role='presentation']" data='<table width="100%" cellspacing="0" c...'>,
+ <Selector xpath="//table[@role='presentation']" data='<table class="gf-t" role="presentatio...'>]
+
+In [26]: response.xpath('//div[@class="itemAttr"]')                                                                   
+Out[26]: [<Selector xpath='//div[@class="itemAttr"]' data='<div class="itemAttr" id="viTabs_0_is...'>]
+
+In [27]: response.xpath('//div[@class="itemAttr"]').extract()                                                         
+Out[27]: ['<div class="itemAttr" id="viTabs_0_is">\n\t\t\t<div class="section">\n\t\t\t\t\t<h2 class="secHd">Item specifics</h2>\n\t\t\t\t\t<table width="100%" cellspacing="0" cellpadding="0" role="presentation">\n\t\t\t\t\t\t\n\t\t\t\t\t\t<tr>\n\t\t\t\t\t\t\t\t\t<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\tCondition:</td>\n\t\t\t\t\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t\t\t\t\t<td width="50.0%">\n\t\t\t\t\t\t\t\t\t\t\t\t<!-- ITEM CONDITION  -->\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<!-- If Attribute is having hidden text / link\t -->\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div aria-live="polite">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tUsed: <span id="vi-cond-addl-info">An item that has been used previously. See the seller’s listing for full details and description of </span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span id="hiddenContent" class="u-dspn" aria-expanded="false">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tany imperfections.<a href="https://pages.ebay.com/help/sell/contextual/condition_5.html" target="_blank" class="infoLink u-nowrap">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tSee all condition definitions<b class="g-hdn">- opens in a new window or tab</b></a>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<!-- TODO: remove hardcoded ID -->\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span id="readFull" class="infoLink u-nowrap">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t... <a href="javascript:;">Read more<b class="g-hdn">about the condition</b></a>\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<!-- </td> -->\n\t\t\t\t\t\t\t\t\t\t\t\t\t</td>\n\t\t\t\t\t\t\t\t\t\t<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\tSize: </td>\n\t\t\t\t\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t\t\t\t\t<td width="50.0%">\n\t\t\t\t\t\t\t\t\t\t\t\t<span>6in.</span></td>\n\t\t\t\t\t\t\t\t\t\t</tr>\n\t\t\t\t\t\t\t<tr>\n\t\t\t\t\t\t\t\t\t<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\tBrand: </td>\n\t\t\t\t\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t\t\t\t\t<td width="50.0%">\n\t\t\t\t\t\t\t\t\t\t\t\t<h2 itemprop="brand" itemscope="itemscope" itemtype="http://schema.org/Brand"><span itemprop="name">Mattel</span></h2></td>\n\t\t\t\t\t\t\t\t\t\t<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\tType: </td>\n\t\t\t\t\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t\t\t\t\t<td width="50.0%">\n\t\t\t\t\t\t\t\t\t\t\t\t<span>Action Figure</span></td>\n\t\t\t\t\t\t\t\t\t\t</tr>\n\t\t\t\t\t\t\t<tr>\n\t\t\t\t\t\t\t\t\t<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\tEra: </td>\n\t\t\t\t\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t\t\t\t\t<td width="50.0%">\n\t\t\t\t\t\t\t\t\t\t\t\t<span>1980-2001</span></td>\n\t\t\t\t\t\t\t\t\t\t<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\tCharacter Family: </td>\n\t\t\t\t\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t\t\t\t\t<td width="50.0%">\n\t\t\t\t\t\t\t\t\t\t\t\t<span>Masters of the Universe</span></td>\n\t\t\t\t\t\t\t\t\t\t</tr>\n\t\t\t\t\t\t\t<!-- Added for see review link -->\n\t\t\t\t\t\t\t</table>\n\t\t\t\t\t\t\n\t\t\t\t\t</div>\n\t\t\t</div>']
+
+In [28]: temp = response.xpath('//div[@class="itemAttr"]').extract()                                                  
+
+In [29]: temp.xpath('.//table')                                                                                       
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-29-915b23805218> in <module>
+----> 1 temp.xpath('.//table')
+
+AttributeError: 'list' object has no attribute 'xpath'
+
+In [30]: temp = response.xpath('//div[@class="itemAttr"]')                                                            
+
+In [31]: temp.xpath('.//table')                                                                                       
+Out[31]: [<Selector xpath='.//table' data='<table width="100%" cellspacing="0" c...'>]
+
+In [32]: temp.xpath('.//table/tbody/tr')                                                                              
+Out[32]: []
+
+In [33]: temp.xpath('.//table//tbody//tr')                                                                            
+Out[33]: []
+
+In [34]: temp.xpath('.//table//tbody')                                                                                
+Out[34]: []
+
+In [35]: temp.xpath('.//table//tr')                                                                                   
+Out[35]: 
+[<Selector xpath='.//table//tr' data='<tr>\n\t\t\t\t\t\t\t\t\t<td class="attrLabels">...'>,
+ <Selector xpath='.//table//tr' data='<tr>\n\t\t\t\t\t\t\t\t\t<td class="attrLabels">...'>,
+ <Selector xpath='.//table//tr' data='<tr>\n\t\t\t\t\t\t\t\t\t<td class="attrLabels">...'>]
+
+In [36]: temp.xpath('.//table//tr').extract()                                                                         
+Out[36]: 
+['<tr>\n\t\t\t\t\t\t\t\t\t<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\tCondition:</td>\n\t\t\t\t\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t\t\t\t\t<td width="50.0%">\n\t\t\t\t\t\t\t\t\t\t\t\t<!-- ITEM CONDITION  -->\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<!-- If Attribute is having hidden text / link\t -->\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div aria-live="polite">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tUsed: <span id="vi-cond-addl-info">An item that has been used previously. See the seller’s listing for full details and description of </span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span id="hiddenContent" class="u-dspn" aria-expanded="false">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tany imperfections.<a href="https://pages.ebay.com/help/sell/contextual/condition_5.html" target="_blank" class="infoLink u-nowrap">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tSee all condition definitions<b class="g-hdn">- opens in a new window or tab</b></a>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<!-- TODO: remove hardcoded ID -->\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span id="readFull" class="infoLink u-nowrap">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t... <a href="javascript:;">Read more<b class="g-hdn">about the condition</b></a>\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<!-- </td> -->\n\t\t\t\t\t\t\t\t\t\t\t\t\t</td>\n\t\t\t\t\t\t\t\t\t\t<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\tSize: </td>\n\t\t\t\t\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t\t\t\t\t<td width="50.0%">\n\t\t\t\t\t\t\t\t\t\t\t\t<span>6in.</span></td>\n\t\t\t\t\t\t\t\t\t\t</tr>',
+ '<tr>\n\t\t\t\t\t\t\t\t\t<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\tBrand: </td>\n\t\t\t\t\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t\t\t\t\t<td width="50.0%">\n\t\t\t\t\t\t\t\t\t\t\t\t<h2 itemprop="brand" itemscope="itemscope" itemtype="http://schema.org/Brand"><span itemprop="name">Mattel</span></h2></td>\n\t\t\t\t\t\t\t\t\t\t<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\tType: </td>\n\t\t\t\t\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t\t\t\t\t<td width="50.0%">\n\t\t\t\t\t\t\t\t\t\t\t\t<span>Action Figure</span></td>\n\t\t\t\t\t\t\t\t\t\t</tr>',
+ '<tr>\n\t\t\t\t\t\t\t\t\t<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\tEra: </td>\n\t\t\t\t\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t\t\t\t\t<td width="50.0%">\n\t\t\t\t\t\t\t\t\t\t\t\t<span>1980-2001</span></td>\n\t\t\t\t\t\t\t\t\t\t<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\tCharacter Family: </td>\n\t\t\t\t\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t\t\t\t\t<td width="50.0%">\n\t\t\t\t\t\t\t\t\t\t\t\t<span>Masters of the Universe</span></td>\n\t\t\t\t\t\t\t\t\t\t</tr>']
+
+In [37]: temp.xpath('.//table//tr//td[@class="attrLabels"]').extract()                                                
+Out[37]: 
+['<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\tCondition:</td>',
+ '<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\tSize: </td>',
+ '<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\tBrand: </td>',
+ '<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\tType: </td>',
+ '<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\tEra: </td>',
+ '<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\tCharacter Family: </td>']
+
+In [38]: labels = temp.xpath('.//table//tr//td[@class="attrLabels"]').extract()                                       
+
+In [39]: temp.xpath('.//table//tr//td').extract()                                                                     
+Out[39]: 
+['<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\tCondition:</td>',
+ '<td width="50.0%">\n\t\t\t\t\t\t\t\t\t\t\t\t<!-- ITEM CONDITION  -->\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<!-- If Attribute is having hidden text / link\t -->\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div aria-live="polite">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tUsed: <span id="vi-cond-addl-info">An item that has been used previously. See the seller’s listing for full details and description of </span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span id="hiddenContent" class="u-dspn" aria-expanded="false">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tany imperfections.<a href="https://pages.ebay.com/help/sell/contextual/condition_5.html" target="_blank" class="infoLink u-nowrap">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tSee all condition definitions<b class="g-hdn">- opens in a new window or tab</b></a>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<!-- TODO: remove hardcoded ID -->\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span id="readFull" class="infoLink u-nowrap">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t... <a href="javascript:;">Read more<b class="g-hdn">about the condition</b></a>\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<!-- </td> -->\n\t\t\t\t\t\t\t\t\t\t\t\t\t</td>',
+ '<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\tSize: </td>',
+ '<td width="50.0%">\n\t\t\t\t\t\t\t\t\t\t\t\t<span>6in.</span></td>',
+ '<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\tBrand: </td>',
+ '<td width="50.0%">\n\t\t\t\t\t\t\t\t\t\t\t\t<h2 itemprop="brand" itemscope="itemscope" itemtype="http://schema.org/Brand"><span itemprop="name">Mattel</span></h2></td>',
+ '<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\tType: </td>',
+ '<td width="50.0%">\n\t\t\t\t\t\t\t\t\t\t\t\t<span>Action Figure</span></td>',
+ '<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\tEra: </td>',
+ '<td width="50.0%">\n\t\t\t\t\t\t\t\t\t\t\t\t<span>1980-2001</span></td>',
+ '<td class="attrLabels">\n\t\t\t\t\t\t\t\t\t \t\t\tCharacter Family: </td>',
+ '<td width="50.0%">\n\t\t\t\t\t\t\t\t\t\t\t\t<span>Masters of the Universe</span></td>']
+
+In [40]: temp.xpath('.//table//tr//td/text').extract()                                                                
+Out[40]: []
+
+In [41]: temp.xpath('.//table//tr//td/text()').extract()                                                              
+Out[41]: 
+['\n\t\t\t\t\t\t\t\t\t \t\t\tCondition:',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t \t\t\tSize: ',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t \t\t\tBrand: ',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t \t\t\tType: ',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t \t\t\tEra: ',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t \t\t\tCharacter Family: ',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t']
+
+In [42]: temp.xpath('.//table//tr//td//text()').extract()                                                             
+Out[42]: 
+['\n\t\t\t\t\t\t\t\t\t \t\t\tCondition:',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tUsed: ',
+ 'An item that has been used previously. See the seller’s listing for full details and description of ',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tany imperfections.',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tSee all condition definitions',
+ '- opens in a new window or tab',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t... ',
+ 'Read more',
+ 'about the condition',
+ '\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t \t\t\tSize: ',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t',
+ '6in.',
+ '\n\t\t\t\t\t\t\t\t\t \t\t\tBrand: ',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t',
+ 'Mattel',
+ '\n\t\t\t\t\t\t\t\t\t \t\t\tType: ',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t',
+ 'Action Figure',
+ '\n\t\t\t\t\t\t\t\t\t \t\t\tEra: ',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t',
+ '1980-2001',
+ '\n\t\t\t\t\t\t\t\t\t \t\t\tCharacter Family: ',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t',
+ 'Masters of the Universe']
+
+In [43]: temp.xpath('.//table//tr//td//text()').extract().split('\t')                                                 
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-43-f5720dfe9f9d> in <module>
+----> 1 temp.xpath('.//table//tr//td//text()').extract().split('\t')
+
+AttributeError: 'list' object has no attribute 'split'
+
+In [44]: attributes = temp.xpath('.//table//tr//td//text()').extract()                                                
+
+In [45]: attributes[0]                                                                                                
+Out[45]: '\n\t\t\t\t\t\t\t\t\t \t\t\tCondition:'
+
+In [46]: attributes[1]                                                                                                
+Out[46]: '\n\t\t\t\t\t\t\t\t\t\t\t\t'
+
+In [47]: attributes[2]                                                                                                
+Out[47]: '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t'
+
+In [48]: attributes[3]                                                                                                
+Out[48]: '\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t'
+
+In [49]: attributes[4]                                                                                                
+Out[49]: '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tUsed: '
+
+In [50]: attributes[4]                                                                                                
+Out[50]: '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tUsed: '
+
+In [51]: attributes[5]                                                                                                
+Out[51]: 'An item that has been used previously. See the seller’s listing for full details and description of '
+
+In [52]: attributes                                                                                                   
+Out[52]: 
+['\n\t\t\t\t\t\t\t\t\t \t\t\tCondition:',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tUsed: ',
+ 'An item that has been used previously. See the seller’s listing for full details and description of ',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tany imperfections.',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tSee all condition definitions',
+ '- opens in a new window or tab',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t... ',
+ 'Read more',
+ 'about the condition',
+ '\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t \t\t\tSize: ',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t',
+ '6in.',
+ '\n\t\t\t\t\t\t\t\t\t \t\t\tBrand: ',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t',
+ 'Mattel',
+ '\n\t\t\t\t\t\t\t\t\t \t\t\tType: ',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t',
+ 'Action Figure',
+ '\n\t\t\t\t\t\t\t\t\t \t\t\tEra: ',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t',
+ '1980-2001',
+ '\n\t\t\t\t\t\t\t\t\t \t\t\tCharacter Family: ',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t',
+ 'Masters of the Universe']
+
+In [53]:                                                                                                              
+
+In [53]:                                                                                                              
+
+In [53]: import re                                                                                                    
+
+In [54]: attributes = temp.xpath('.//table//tr//td[@class="attrLabels"]//text()').extract()                           
+
+In [55]: attributes                                                                                                   
+Out[55]: 
+['\n\t\t\t\t\t\t\t\t\t \t\t\tCondition:',
+ '\n\t\t\t\t\t\t\t\t\t \t\t\tSize: ',
+ '\n\t\t\t\t\t\t\t\t\t \t\t\tBrand: ',
+ '\n\t\t\t\t\t\t\t\t\t \t\t\tType: ',
+ '\n\t\t\t\t\t\t\t\t\t \t\t\tEra: ',
+ '\n\t\t\t\t\t\t\t\t\t \t\t\tCharacter Family: ']
+
+In [56]: attrLabels = temp.xpath('.//table//tr//td[@class="attrLabels"]//text()').extract()                           
+
+In [57]: attrValuess = temp.xpath('.//table//tr//td/span/text()').extract()                                           
+
+In [58]: attrValuess                                                                                                  
+Out[58]: ['6in.', 'Action Figure', '1980-2001', 'Masters of the Universe']
+
+In [59]: list(map(lambda s: s.lstrip(),temp.xpath('.//table//tr//td//text()').extract()))                             
+Out[59]: 
+['Condition:',
+ '',
+ '',
+ '',
+ 'Used: ',
+ 'An item that has been used previously. See the seller’s listing for full details and description of ',
+ '',
+ 'any imperfections.',
+ 'See all condition definitions',
+ '- opens in a new window or tab',
+ '',
+ '',
+ '',
+ '... ',
+ 'Read more',
+ 'about the condition',
+ '',
+ '',
+ '',
+ '',
+ 'Size: ',
+ '',
+ '6in.',
+ 'Brand: ',
+ '',
+ 'Mattel',
+ 'Type: ',
+ '',
+ 'Action Figure',
+ 'Era: ',
+ '',
+ '1980-2001',
+ 'Character Family: ',
+ '',
+ 'Masters of the Universe']
+
+In [60]: list(map(lambda s: s.strip(),temp.xpath('.//table//tr//td//text()').extract()))                              
+Out[60]: 
+['Condition:',
+ '',
+ '',
+ '',
+ 'Used:',
+ 'An item that has been used previously. See the seller’s listing for full details and description of',
+ '',
+ 'any imperfections.',
+ 'See all condition definitions',
+ '- opens in a new window or tab',
+ '',
+ '',
+ '',
+ '...',
+ 'Read more',
+ 'about the condition',
+ '',
+ '',
+ '',
+ '',
+ 'Size:',
+ '',
+ '6in.',
+ 'Brand:',
+ '',
+ 'Mattel',
+ 'Type:',
+ '',
+ 'Action Figure',
+ 'Era:',
+ '',
+ '1980-2001',
+ 'Character Family:',
+ '',
+ 'Masters of the Universe']
+
+In [61]: list(filter(is_not_empty,list(map(lambda s: s.strip(),temp.xpath('.//table//tr//td//text()').extract()))))                                                   
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+<ipython-input-61-58730cf78f9f> in <module>
+----> 1 list(filter(is_not_empty,list(map(lambda s: s.strip(),temp.xpath('.//table//tr//td//text()').extract()))))
+
+NameError: name 'is_not_empty' is not defined
+
+In [62]: list(filter(lambda s: s != '',list(map(lambda s: s.strip(),temp.xpath('.//table//tr//td//text()').extract()))))                                              
+Out[62]: 
+['Condition:',
+ 'Used:',
+ 'An item that has been used previously. See the seller’s listing for full details and description of',
+ 'any imperfections.',
+ 'See all condition definitions',
+ '- opens in a new window or tab',
+ '...',
+ 'Read more',
+ 'about the condition',
+ 'Size:',
+ '6in.',
+ 'Brand:',
+ 'Mattel',
+ 'Type:',
+ 'Action Figure',
+ 'Era:',
+ '1980-2001',
+ 'Character Family:',
+ 'Masters of the Universe']
+
+In [63]: test = list(filter(lambda s: s != '',list(map(lambda s: s.strip(),temp.xpath('.//table//tr//td//text()').extract()))))                                       
+
+In [64]: test_dict = {i:test for i in range(0,len(test))}                                                                                                             
+
+In [65]: test_dict                                                                                                                                                    
+Out[65]: 
+{0: ['Condition:',
+  'Used:',
+  'An item that has been used previously. See the seller’s listing for full details and description of',
+  'any imperfections.',
+  'See all condition definitions',
+  '- opens in a new window or tab',
+  '...',
+  'Read more',
+  'about the condition',
+  'Size:',
+  '6in.',
+  'Brand:',
+  'Mattel',
+  'Type:',
+  'Action Figure',
+  'Era:',
+  '1980-2001',
+  'Character Family:',
+  'Masters of the Universe'],
+ 1: ['Condition:',
+  'Used:',
+  'An item that has been used previously. See the seller’s listing for full details and description of',
+  'any imperfections.',
+  'See all condition definitions',
+  '- opens in a new window or tab',
+  '...',
+  'Read more',
+  'about the condition',
+  'Size:',
+  '6in.',
+  'Brand:',
+  'Mattel',
+  'Type:',
+  'Action Figure',
+  'Era:',
+  '1980-2001',
+  'Character Family:',
+  'Masters of the Universe'],
+ 2: ['Condition:',
+  'Used:',
+  'An item that has been used previously. See the seller’s listing for full details and description of',
+  'any imperfections.',
+  'See all condition definitions',
+  '- opens in a new window or tab',
+  '...',
+  'Read more',
+  'about the condition',
+  'Size:',
+  '6in.',
+  'Brand:',
+  'Mattel',
+  'Type:',
+  'Action Figure',
+  'Era:',
+  '1980-2001',
+  'Character Family:',
+  'Masters of the Universe'],
+ 3: ['Condition:',
+  'Used:',
+  'An item that has been used previously. See the seller’s listing for full details and description of',
+  'any imperfections.',
+  'See all condition definitions',
+  '- opens in a new window or tab',
+  '...',
+  'Read more',
+  'about the condition',
+  'Size:',
+  '6in.',
+  'Brand:',
+  'Mattel',
+  'Type:',
+  'Action Figure',
+  'Era:',
+  '1980-2001',
+  'Character Family:',
+  'Masters of the Universe'],
+ 4: ['Condition:',
+  'Used:',
+  'An item that has been used previously. See the seller’s listing for full details and description of',
+  'any imperfections.',
+  'See all condition definitions',
+  '- opens in a new window or tab',
+  '...',
+  'Read more',
+  'about the condition',
+  'Size:',
+  '6in.',
+  'Brand:',
+  'Mattel',
+  'Type:',
+  'Action Figure',
+  'Era:',
+  '1980-2001',
+  'Character Family:',
+  'Masters of the Universe'],
+ 5: ['Condition:',
+  'Used:',
+  'An item that has been used previously. See the seller’s listing for full details and description of',
+  'any imperfections.',
+  'See all condition definitions',
+  '- opens in a new window or tab',
+  '...',
+  'Read more',
+  'about the condition',
+  'Size:',
+  '6in.',
+  'Brand:',
+  'Mattel',
+  'Type:',
+  'Action Figure',
+  'Era:',
+  '1980-2001',
+  'Character Family:',
+  'Masters of the Universe'],
+ 6: ['Condition:',
+  'Used:',
+  'An item that has been used previously. See the seller’s listing for full details and description of',
+  'any imperfections.',
+  'See all condition definitions',
+  '- opens in a new window or tab',
+  '...',
+  'Read more',
+  'about the condition',
+  'Size:',
+  '6in.',
+  'Brand:',
+  'Mattel',
+  'Type:',
+  'Action Figure',
+  'Era:',
+  '1980-2001',
+  'Character Family:',
+  'Masters of the Universe'],
+ 7: ['Condition:',
+  'Used:',
+  'An item that has been used previously. See the seller’s listing for full details and description of',
+  'any imperfections.',
+  'See all condition definitions',
+  '- opens in a new window or tab',
+  '...',
+  'Read more',
+  'about the condition',
+  'Size:',
+  '6in.',
+  'Brand:',
+  'Mattel',
+  'Type:',
+  'Action Figure',
+  'Era:',
+  '1980-2001',
+  'Character Family:',
+  'Masters of the Universe'],
+ 8: ['Condition:',
+  'Used:',
+  'An item that has been used previously. See the seller’s listing for full details and description of',
+  'any imperfections.',
+  'See all condition definitions',
+  '- opens in a new window or tab',
+  '...',
+  'Read more',
+  'about the condition',
+  'Size:',
+  '6in.',
+  'Brand:',
+  'Mattel',
+  'Type:',
+  'Action Figure',
+  'Era:',
+  '1980-2001',
+  'Character Family:',
+  'Masters of the Universe'],
+ 9: ['Condition:',
+  'Used:',
+  'An item that has been used previously. See the seller’s listing for full details and description of',
+  'any imperfections.',
+  'See all condition definitions',
+  '- opens in a new window or tab',
+  '...',
+  'Read more',
+  'about the condition',
+  'Size:',
+  '6in.',
+  'Brand:',
+  'Mattel',
+  'Type:',
+  'Action Figure',
+  'Era:',
+  '1980-2001',
+  'Character Family:',
+  'Masters of the Universe'],
+ 10: ['Condition:',
+  'Used:',
+  'An item that has been used previously. See the seller’s listing for full details and description of',
+  'any imperfections.',
+  'See all condition definitions',
+  '- opens in a new window or tab',
+  '...',
+  'Read more',
+  'about the condition',
+  'Size:',
+  '6in.',
+  'Brand:',
+  'Mattel',
+  'Type:',
+  'Action Figure',
+  'Era:',
+  '1980-2001',
+  'Character Family:',
+  'Masters of the Universe'],
+ 11: ['Condition:',
+  'Used:',
+  'An item that has been used previously. See the seller’s listing for full details and description of',
+  'any imperfections.',
+  'See all condition definitions',
+  '- opens in a new window or tab',
+  '...',
+  'Read more',
+  'about the condition',
+  'Size:',
+  '6in.',
+  'Brand:',
+  'Mattel',
+  'Type:',
+  'Action Figure',
+  'Era:',
+  '1980-2001',
+  'Character Family:',
+  'Masters of the Universe'],
+ 12: ['Condition:',
+  'Used:',
+  'An item that has been used previously. See the seller’s listing for full details and description of',
+  'any imperfections.',
+  'See all condition definitions',
+  '- opens in a new window or tab',
+  '...',
+  'Read more',
+  'about the condition',
+  'Size:',
+  '6in.',
+  'Brand:',
+  'Mattel',
+  'Type:',
+  'Action Figure',
+  'Era:',
+  '1980-2001',
+  'Character Family:',
+  'Masters of the Universe'],
+ 13: ['Condition:',
+  'Used:',
+  'An item that has been used previously. See the seller’s listing for full details and description of',
+  'any imperfections.',
+  'See all condition definitions',
+  '- opens in a new window or tab',
+  '...',
+  'Read more',
+  'about the condition',
+  'Size:',
+  '6in.',
+  'Brand:',
+  'Mattel',
+  'Type:',
+  'Action Figure',
+  'Era:',
+  '1980-2001',
+  'Character Family:',
+  'Masters of the Universe'],
+ 14: ['Condition:',
+  'Used:',
+  'An item that has been used previously. See the seller’s listing for full details and description of',
+  'any imperfections.',
+  'See all condition definitions',
+  '- opens in a new window or tab',
+  '...',
+  'Read more',
+  'about the condition',
+  'Size:',
+  '6in.',
+  'Brand:',
+  'Mattel',
+  'Type:',
+  'Action Figure',
+  'Era:',
+  '1980-2001',
+  'Character Family:',
+  'Masters of the Universe'],
+ 15: ['Condition:',
+  'Used:',
+  'An item that has been used previously. See the seller’s listing for full details and description of',
+  'any imperfections.',
+  'See all condition definitions',
+  '- opens in a new window or tab',
+  '...',
+  'Read more',
+  'about the condition',
+  'Size:',
+  '6in.',
+  'Brand:',
+  'Mattel',
+  'Type:',
+  'Action Figure',
+  'Era:',
+  '1980-2001',
+  'Character Family:',
+  'Masters of the Universe'],
+ 16: ['Condition:',
+  'Used:',
+  'An item that has been used previously. See the seller’s listing for full details and description of',
+  'any imperfections.',
+  'See all condition definitions',
+  '- opens in a new window or tab',
+  '...',
+  'Read more',
+  'about the condition',
+  'Size:',
+  '6in.',
+  'Brand:',
+  'Mattel',
+  'Type:',
+  'Action Figure',
+  'Era:',
+  '1980-2001',
+  'Character Family:',
+  'Masters of the Universe'],
+ 17: ['Condition:',
+  'Used:',
+  'An item that has been used previously. See the seller’s listing for full details and description of',
+  'any imperfections.',
+  'See all condition definitions',
+  '- opens in a new window or tab',
+  '...',
+  'Read more',
+  'about the condition',
+  'Size:',
+  '6in.',
+  'Brand:',
+  'Mattel',
+  'Type:',
+  'Action Figure',
+  'Era:',
+  '1980-2001',
+  'Character Family:',
+  'Masters of the Universe'],
+ 18: ['Condition:',
+  'Used:',
+  'An item that has been used previously. See the seller’s listing for full details and description of',
+  'any imperfections.',
+  'See all condition definitions',
+  '- opens in a new window or tab',
+  '...',
+  'Read more',
+  'about the condition',
+  'Size:',
+  '6in.',
+  'Brand:',
+  'Mattel',
+  'Type:',
+  'Action Figure',
+  'Era:',
+  '1980-2001',
+  'Character Family:',
+  'Masters of the Universe']}
+
+In [66]: test_dict = {test[i]:test[i+1] for i in range(0,len(test))}                                                                                                  
+---------------------------------------------------------------------------
+IndexError                                Traceback (most recent call last)
+<ipython-input-66-033a0d6b5b26> in <module>
+----> 1 test_dict = {test[i]:test[i+1] for i in range(0,len(test))}
+
+<ipython-input-66-033a0d6b5b26> in <dictcomp>(.0)
+----> 1 test_dict = {test[i]:test[i+1] for i in range(0,len(test))}
+
+IndexError: list index out of range
+
+In [67]: test_dict = {test[i]:test[i+1] for i in range(0,len(test),2)}                                                                                                
+---------------------------------------------------------------------------
+IndexError                                Traceback (most recent call last)
+<ipython-input-67-863a7f1d4324> in <module>
+----> 1 test_dict = {test[i]:test[i+1] for i in range(0,len(test),2)}
+
+<ipython-input-67-863a7f1d4324> in <dictcomp>(.0)
+----> 1 test_dict = {test[i]:test[i+1] for i in range(0,len(test),2)}
+
+IndexError: list index out of range
+
+In [68]: test_dict = {test[i]:test[i+1] for i in range(0,len(test)-1,2)}                                                                                              
+
+In [69]: test_dict                                                                                                                                                    
+Out[69]: 
+{'Condition:': 'Used:',
+ 'An item that has been used previously. See the seller’s listing for full details and description of': 'any imperfections.',
+ 'See all condition definitions': '- opens in a new window or tab',
+ '...': 'Read more',
+ 'about the condition': 'Size:',
+ '6in.': 'Brand:',
+ 'Mattel': 'Type:',
+ 'Action Figure': 'Era:',
+ '1980-2001': 'Character Family:'}
+
+In [70]: test_dict['Size']                                                                                                                                            
+---------------------------------------------------------------------------
+KeyError                                  Traceback (most recent call last)
+<ipython-input-70-a4b327d7b6c7> in <module>
+----> 1 test_dict['Size']
+
+KeyError: 'Size'
+
+In [71]: test                                                                                                                                                         
+Out[71]: 
+['Condition:',
+ 'Used:',
+ 'An item that has been used previously. See the seller’s listing for full details and description of',
+ 'any imperfections.',
+ 'See all condition definitions',
+ '- opens in a new window or tab',
+ '...',
+ 'Read more',
+ 'about the condition',
+ 'Size:',
+ '6in.',
+ 'Brand:',
+ 'Mattel',
+ 'Type:',
+ 'Action Figure',
+ 'Era:',
+ '1980-2001',
+ 'Character Family:',
+ 'Masters of the Universe']
+
+In [72]: test[0][:-1]                                                                                                                                                 
+Out[72]: 'Condition'
+
+In [73]: test_dict = {test[i][:-1]:test[i+1] for i in range(0,len(test)-1,2)}                                                                                         
+
+In [74]: test_dict                                                                                                                                                    
+Out[74]: 
+{'Condition': 'Used:',
+ 'An item that has been used previously. See the seller’s listing for full details and description o': 'any imperfections.',
+ 'See all condition definition': '- opens in a new window or tab',
+ '..': 'Read more',
+ 'about the conditio': 'Size:',
+ '6in': 'Brand:',
+ 'Matte': 'Type:',
+ 'Action Figur': 'Era:',
+ '1980-200': 'Character Family:'}
+
+In [75]: test                                                                                                                                                         
+Out[75]: 
+['Condition:',
+ 'Used:',
+ 'An item that has been used previously. See the seller’s listing for full details and description of',
+ 'any imperfections.',
+ 'See all condition definitions',
+ '- opens in a new window or tab',
+ '...',
+ 'Read more',
+ 'about the condition',
+ 'Size:',
+ '6in.',
+ 'Brand:',
+ 'Mattel',
+ 'Type:',
+ 'Action Figure',
+ 'Era:',
+ '1980-2001',
+ 'Character Family:',
+ 'Masters of the Universe']
+
+In [76]: labels = temp.xpath('.//table//tr//td[@class="attrLabels"]').extract()                                                                                       
+
+In [77]: temp.xpath('.//table//tr//td//text()').extract()                                                                                                             
+Out[77]: 
+['\n\t\t\t\t\t\t\t\t\t \t\t\tCondition:',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tUsed: ',
+ 'An item that has been used previously. See the seller’s listing for full details and description of ',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tany imperfections.',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tSee all condition definitions',
+ '- opens in a new window or tab',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t... ',
+ 'Read more',
+ 'about the condition',
+ '\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t \t\t\tSize: ',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t',
+ '6in.',
+ '\n\t\t\t\t\t\t\t\t\t \t\t\tBrand: ',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t',
+ 'Mattel',
+ '\n\t\t\t\t\t\t\t\t\t \t\t\tType: ',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t',
+ 'Action Figure',
+ '\n\t\t\t\t\t\t\t\t\t \t\t\tEra: ',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t',
+ '1980-2001',
+ '\n\t\t\t\t\t\t\t\t\t \t\t\tCharacter Family: ',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t',
+ 'Masters of the Universe']
+
+In [78]: temp = response.xpath('//div[@class="itemAttr"]')                                                                                                            
+
+In [79]: temp.xpath('.//table//tr//td//text()').extract()                                                                                                             
+Out[79]: 
+['\n\t\t\t\t\t\t\t\t\t \t\t\tCondition:',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tUsed: ',
+ 'An item that has been used previously. See the seller’s listing for full details and description of ',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tany imperfections.',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tSee all condition definitions',
+ '- opens in a new window or tab',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t... ',
+ 'Read more',
+ 'about the condition',
+ '\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t\t',
+ '\n\t\t\t\t\t\t\t\t\t \t\t\tSize: ',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t',
+ '6in.',
+ '\n\t\t\t\t\t\t\t\t\t \t\t\tBrand: ',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t',
+ 'Mattel',
+ '\n\t\t\t\t\t\t\t\t\t \t\t\tType: ',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t',
+ 'Action Figure',
+ '\n\t\t\t\t\t\t\t\t\t \t\t\tEra: ',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t',
+ '1980-2001',
+ '\n\t\t\t\t\t\t\t\t\t \t\t\tCharacter Family: ',
+ '\n\t\t\t\t\t\t\t\t\t\t\t\t',
+ 'Masters of the Universe']
+
+In [80]: test                                                                                                                                                         
+Out[80]: 
+['Condition:',
+ 'Used:',
+ 'An item that has been used previously. See the seller’s listing for full details and description of',
+ 'any imperfections.',
+ 'See all condition definitions',
+ '- opens in a new window or tab',
+ '...',
+ 'Read more',
+ 'about the condition',
+ 'Size:',
+ '6in.',
+ 'Brand:',
+ 'Mattel',
+ 'Type:',
+ 'Action Figure',
+ 'Era:',
+ '1980-2001',
+ 'Character Family:',
+ 'Masters of the Universe']
+
+In [81]: s = 'Character Family:'                                                                                                                                      
+
+In [82]: ':' in s                                                                                                                                                     
+Out[82]: True
+
+In [83]: #test_dict = {test[i][:-1]:test[i+1] for i in range(0,len(test)-1,2)}                                                                                        
+
+In [84]: {test[i][:-1]:test[i+1] for i in range (0,len(test)-1) if ':' in test[i]}                                                                                    
+Out[84]: 
+{'Condition': 'Used:',
+ 'Used': 'An item that has been used previously. See the seller’s listing for full details and description of',
+ 'Size': '6in.',
+ 'Brand': 'Mattel',
+ 'Type': 'Action Figure',
+ 'Era': '1980-2001',
+ 'Character Family': 'Masters of the Universe'}
+
+In [85]:                                                                                                                                                              

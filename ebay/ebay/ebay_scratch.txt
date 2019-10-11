@@ -1,0 +1,40 @@
+
+
+https://www.ebay.com/sch/i.html?_dcat=246&_fsrp=1&_nkw=toys&_sacat=246&_from=R40&LH_Complete=1&rt=nc&LH_Sold=1&Type=Action%2520Figure&_pgn={}
+https://www.ebay.com/sch/i.html?_dcat=246&_fsrp=1&_nkw=toys&_sacat=246&_from=R40&LH_Complete=1&rt=nc&LH_Sold=1&Type=Action%2520Figure         
+https://www.ebay.com/sch/i.html?_dcat=246&_fsrp=1&_nkw=toys&_sacat=246&_from=R40&LH_Complete=1&rt=nc&LH_Sold=1&Type=Action%2520Figure&_pgn=2
+https://www.ebay.com/sch/i.html?_dcat=246&_fsrp=1&_nkw=toys&_sacat=246&_from=R40&LH_Complete=1&rt=nc&LH_Sold=1&Type=Action%2520Figure&_pgn=3
+https://www.ebay.com/sch/i.html?_dcat=246&_fsrp=1&_nkw=toys&_sacat=246&_from=R40&LH_Complete=1&rt=nc&LH_Sold=1&Type=Action%2520Figure&_pgn=4
+
+
+req = scrapy.Request('https://www.ebay.com/sch/i.html?_dcat=246&_fsrp=1&_nkw=toys&_sacat=246&_from=R40&LH_Complete=1&rt=nc&LH_Sold=1&Type=Action%2520Figure',headers = {'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0'})
+
+fetch(req)
+
+//*[@id="srp-river-results-listing1"]/div/div[2]/a
+
+
+req = scrapy.Request('https://www.ebay.com/itm/MOTU-Masters-of-the-Universe-He-Man-Spikor-Action-Figure-Part-Vintage-Lot-Mace/163896880849?hash=item262903eed1:g:z40AAOSwm8Zdm~pA',headers= {'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0'})
+
+fetch(req)
+
+
+with bids:
+
+req = scrapy.Request('https://www.ebay.com/itm/Marvel-legends-Elsa-bloodstone-a-force-toys-r-us-exclusive/143401411779?hash=item216363e4c3%3Ag%3AxNcAAOSw4QRdljuQ&LH_Auction=1', headers = {'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0'})
+
+bin only:
+
+website = 'https://www.ebay.com/itm/WWE-Hollywood-Hulk-Hogan-Jakks-Classic-Superstars-Series-12-Wrestling-Figure-/323931669619?hash=item4b6bd50473%3Ag%3ABOIAAOSwXHhdj~rH&nma=true&si=Myl9XCIeOF%252Fp7h8cFFUkMydaUYM%253D&orig_cvip=true&nordt=true&rt=nc&_trksid=p2047675.l2557'
+
+character group copied xpath
+
+//*[@id="viTabs_0_is"]/div/table/tbody/tr[3]/td[4]/span  test 1
+//*[@id="viTabs_0_is"]/div/table[2]/tbody/tr[1]/td[4]/span test 2
+//*[@id="viTabs_0_is"]/div/table/tbody/tr[1]/td[4]/span test 4
+//*[@id="viTabs_0_is"]/div/table/tbody/tr[2]/td[2]/span test 5
+
+
+
+xpath to table first
+table.xpath(td width = 50.0)/span/text()).extract()

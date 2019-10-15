@@ -10,28 +10,29 @@ class EbaySpider (Spider):
 
 
     def parse(self, response):
-    	
-    	#get the total number of pages from the hit summary on the left-hand side.
-    	#hit_string = re.sub(r',','',''.join(response.xpath('//div[@class="result-summary-container"]//text()').extract()[1:]))
-    	#_, per_page, total_hits = map(lambda x: int(x), re.findall('\d+', hit_string))
-    	#number_pages = total_hits // per_page
+        
+        #get the total number of pages from the hit summary on the left-hand side.
+        #hit_string = response.xpath('//h1[@class="srp-controls__count-heading"]/span/text()').extract_first()
+        #total_hits = int(''.join(re.findall('\d+(?:\.\d+)?',hit_string)))
+        #per_page = 50 #ebay seems to default responses to 50 per page. 
+        #number_pages = total_hits // per_page
 
-    	
-    	#store long url, and construct all the urls for the resulting pages.
-    	temp = 'https://www.ebay.com/sch/i.html?_dcat=246&_fsrp=1&_nkw=toys&_sacat=246&_from=R40&LH_Complete=1&rt=nc&LH_Sold=1&Type=Action%2520Figure&_pgn={}'
+        
+        #store long url, and construct all the urls for the resulting pages.
+        temp = 'https://www.ebay.com/sch/i.html?_dcat=246&_fsrp=1&_nkw=toys&_sacat=246&_from=R40&LH_Complete=1&rt=nc&LH_Sold=1&Type=Action%2520Figure&_pgn={}'
 
-    	page_urls = [temp.format(x) for x in range(1,220)] #try 20
+        page_urls = [temp.format(x) for x in range(1,260)] #try 250
 
-    	for url in page_urls: #yield 2 for now
-    		yield Request(url=url, callback = self.parse_result_page)
+        
+        for url in page_urls: #yield 2 for now
+            yield Request(url=url, callback = self.parse_result_page)
 
     def parse_result_page(self, response):
 
 
         item_urls = response.xpath('//a[@class="s-item__link"]/@href').extract()
-        print(len(item_urls)) #print how many urls gathered per page. Apparently default is 50?
-        print('='*50)
-
+        #print(len(item_urls)) #print how many urls gathered per page. Apparently default is 50?
+        #print('='*50)
 
         for url in item_urls:
             yield Request(url, callback=self.parse_item_page)
@@ -40,6 +41,14 @@ class EbaySpider (Spider):
 
         title = response.xpath('//span[@id="vi-lkhdr-itmTitl"]/text()').extract_first()
         
+        item_num = int(response.xpath('//div[@class="u-flL iti-act-num itm-num-txt"]/text()').extract_first())
+
+        try:
+            condition = response.xpath('//div[@itemprop="itemCondition"]/text()').extract_first()
+        except:
+            condition = 'None'
+
+
         #BIN page has different xpath from auction page. Try BIN, exception is auction.
 
         try:
@@ -50,12 +59,26 @@ class EbaySpider (Spider):
         #process either BIN or auction price with below:
         price = float(''.join(re.findall('\d+(?:\.\d+)?',price1)))
         
-        #not all results will be auction format. 0 bids is BIN.
+        #not all results will be auction format. 0 bids is BIN/dutch auction.
 
         try:
             bids = int(response.xpath('//a[@class="vi-bidC"]/span/text()').extract_first())
         except:
             bids = 0
+
+        #dutch-style auctions show quantity sold. If not dutch style, quant_sold = 1.
+
+        try:
+            quant_sold = response.xpath('//a[@class="vi-txt-underline"]/text()').extract_first()
+            quant_sold = quant_sold = int(''.join(re.findall('\d+',quant_sold)))
+        except:
+            quant_sold = 1
+
+        try:
+            category = response.xpath('//td[@style="vertical-align:top;"]/table/tr/td/ul/li[5]//text()').extract_first()
+        except:
+            category = ''
+
 
         #store pages with multiple quantities will not have a sold date on the results page
         #as long as there is item stock.
@@ -113,12 +136,16 @@ class EbaySpider (Spider):
         except:
             size = ''
 
-
+        #+++++++++++++assign items++++++++++++++++
         
         item = EbayItem()
         item['title'] = title
+        item['item_num'] = item_num
+        item['condition'] = condition
         item['price'] = price
         item['bids'] = bids
+        item['quantity_sold'] = quant_sold
+        item['category'] = category
         item['brand'] = brand
         item['year'] = year
         item['era'] = era

@@ -15,11 +15,14 @@ class EbayItem(scrapy.Item):
     
     #ebay_id = scrapy.Field()
     title = scrapy.Field()
+    item_num = scrapy.Field()
     #description = scrapy.Field()
-    
+    condition = scrapy.Field()
     #product = scrapy.Field()
     price = scrapy.Field()
     bids = scrapy.Field()
+    quantity_sold = scrapy.Field()
+    category = scrapy.Field()
     brand = scrapy.Field()
     #seller_id = scrapy.Field()
     year = scrapy.Field()

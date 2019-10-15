@@ -9,3 +9,6 @@ For example, BIN formats will have 0 for number of bids, while "dutch" style auc
 
 v1.0
 At this time, there is no functionality yet to consider text from seller-provided descriptions, as well as capturing dutch-style auction listings.
+
+v2.0
+Updated with format, and scraped an additional day. Final jupyter ipython file named "ebay_final" pushed. Includes interactive plotly graphs...which I couldn't export to the final pdf.

@@ -38,3 +38,11 @@ character group copied xpath
 
 xpath to table first
 table.xpath(td width = 50.0)/span/text()).extract()
+
+//*[@id="ds_div"]
+
+
+***default middleware setting****
+
+DOWNLOADER_MIDDLEWARES = {
+#    'ebay.middlewares.EbayDownloaderMiddleware': 543,

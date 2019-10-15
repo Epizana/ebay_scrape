@@ -21,7 +21,7 @@ from scrapy.exporters import CsvItemExporter
 class WriteItemPipeline(object): #can copy and paste into my own script! However changes the filename.
 
     def __init__(self):
-        self.filename = 'ebay1.csv'
+        self.filename = 'ebay11.csv'
 
     def open_spider(self, spider):
         self.csvfile = open(self.filename, 'wb') #,/n = '' for windows.
